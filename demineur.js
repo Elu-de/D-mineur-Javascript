@@ -82,7 +82,7 @@ class Case{
 	}
 }
 
-$("#newgame").on("click", function(){
+document.getElementById("newgame").addEventListener("click", function(){
 	canPlay=true;
 	var e = document.getElementById("level");
 	var level = e.options[e.selectedIndex].value;
