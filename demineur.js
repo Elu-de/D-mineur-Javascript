@@ -1,6 +1,6 @@
 //Code pour le jeu du démineur
 var difficultes = {
-	"easy" : [5, 5, 2],
+	"easy" : [9, 9, 10],
 	"average" : [16, 16, 40],
 	"expert" : [22, 22, 100],
 	"master" : [30, 30, 250]
