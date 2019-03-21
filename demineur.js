@@ -36,6 +36,11 @@ class Board{
                 td.addEventListener("click", function(){
                 	selectionCase(this);
                 })
+
+                td.addEventListener("contextmenu", function(event){
+                	event.preventDefault();
+                	flagCase(this);
+                }, false)
 			}
 		}
 	}
@@ -54,16 +59,20 @@ class Board{
 			return true;
 		}
 		else{
-			return this.table[row][column].selected;
+			return this.table[row][column].select;
 		}
+	}
+
+	isFlaged(row, column){
+		return this.table[row][column].flag;
 	}
 }
 
 class Case{
 	constructor(elm){
 		this.mine = false;
-		this.selected = false;
-		this.element = elm;
+		this.select = false;
+		this.flag = false;
 	}
 }
 
@@ -71,12 +80,11 @@ $("#newgame").on("click", function(){
 	var e = document.getElementById("level");
 	var level = e.options[e.selectedIndex].value;
 
-
 	var sizeX = difficultes[level][0];
 	var sizeY = difficultes[level][1];
 	var nbrMines = difficultes[level][2];
 	table = new Board(sizeX, sizeY, nbrMines);
-
+	document.getElementById("nbflag").textContent = nbrMines;
 	randomMines(nbrMines);
 	start();
 })
@@ -179,4 +187,20 @@ function checkAround(row, col){
 	if(table.isMined(row,col-1)) nbrMines++;
 
 	return nbrMines;
+}
+
+function flagCase(elm){
+	row = parseInt(elm.dataset.row);
+	column = parseInt(elm.dataset.column);
+
+	if(!table.isSelected(row, column)){
+		table.table[row][column].flag = !table.table[row][column].flag;
+		table.table[row][column].flag ? table.nbrMines-- : table.nbrMines++;
+		document.getElementById("nbflag").textContent = table.nbrMines;
+	}
+
+	var img;
+	table.table[row][column].flag ? img = "flag" : img = "normal";
+	document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/"+img+".png";
+
 }
