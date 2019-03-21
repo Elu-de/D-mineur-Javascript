@@ -24,6 +24,7 @@ h1 {
 
 
 #gameboard {
-	display: inline;
-	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
