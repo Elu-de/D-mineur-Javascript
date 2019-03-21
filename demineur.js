@@ -1,12 +1,13 @@
 //Code pour le jeu du démineur
 var difficultes = {
-	"easy" : [9, 9, 10],
+	"easy" : [5, 5, 2],
 	"average" : [16, 16, 40],
 	"expert" : [22, 22, 100],
 	"master" : [30, 30, 250]
 }
 var niveauChoisi = "master";
 var table;
+var canPlay=false;
 
 document.getElementById("newgame").setAttribute("disabled","disabled");
 
@@ -14,6 +15,7 @@ class Board{
 	constructor(x,y, nbrMines){
 		this.nbrMines = nbrMines;
 		this.table = [];
+		this.selectable = (x*y)-nbrMines;
 
 		document.getElementById("gameboard").innerHTML = "";
 		var table = document.createElement("table");
@@ -34,13 +36,17 @@ class Board{
                 this.table[i].push(new Case(td));
 
                 td.addEventListener("click", function(){
-                	selectionCase(this);
+                	if(canPlay){
+						selectionCase(this);
+                	}
                 })
 
                 td.addEventListener("contextmenu", function(event){
-                	event.preventDefault();
-                	flagCase(this);
-                }, false)
+                	if(canPlay){
+                		event.preventDefault();
+                		flagCase(this);
+                	}
+                })
 			}
 		}
 	}
@@ -77,6 +83,7 @@ class Case{
 }
 
 $("#newgame").on("click", function(){
+	canPlay=true;
 	var e = document.getElementById("level");
 	var level = e.options[e.selectedIndex].value;
 
@@ -159,12 +166,14 @@ function selectionPosition(row, column){
 
 	else{
 		if(table.isMined(row, column)){
+			canPlay=false;
 			alert("game over");
 			clearInterval(temp);
-			document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/bomb.png";
+			showMines();
 		}
 
 		else{
+			table.selectable--;
 			var nbrMines = checkAround(row, column);
 
 			if(!nbrMines){
@@ -175,6 +184,12 @@ function selectionPosition(row, column){
 			}
 
 			table.table[row][column].select = true;	
+		}
+
+		if(!table.selectable){
+			alert("You win !");
+			canPlay = false;
+			clearInterval(temp);
 		}
 	}
 }
@@ -207,6 +222,14 @@ function flagCase(elm){
 		document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/"+img+".png";
 		var img;
 	}
+}
 
-
+function showMines(){
+	for(i=0; i<table.table.length ; i++){
+		for(j=0; j<table.table[0].length ; j++){
+			if(table.isMined(i,j)){
+				document.querySelector("td[data-row='"+i+"'][data-column='"+j+"']").childNodes[0].src = "images/bomb.png";
+			}
+		}
+	}
 }
