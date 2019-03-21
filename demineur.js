@@ -148,11 +148,16 @@ function selectionPosition(row, column){
 		return;
 	}
 
+	if(table.isFlaged(row, column)){
+		table.nbrMines++;
+		document.getElementById("nbflag").textContent = table.nbrMines;
+	}
+
 	if(table.isSelected(row,column)){
 		return;
 	}
 
-	if(!table.table[row][column].discovered){
+	else{
 		if(table.isMined(row, column)){
 			alert("game over");
 			clearInterval(temp);
@@ -169,7 +174,7 @@ function selectionPosition(row, column){
 				document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/"+nbrMines+".png";
 			}
 
-			table.table[row][column].discovered = true;	
+			table.table[row][column].select = true;	
 		}
 	}
 }
@@ -197,10 +202,11 @@ function flagCase(elm){
 		table.table[row][column].flag = !table.table[row][column].flag;
 		table.table[row][column].flag ? table.nbrMines-- : table.nbrMines++;
 		document.getElementById("nbflag").textContent = table.nbrMines;
+	
+		table.table[row][column].flag ? img = "flag" : img = "normal";
+		document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/"+img+".png";
+		var img;
 	}
 
-	var img;
-	table.table[row][column].flag ? img = "flag" : img = "normal";
-	document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/"+img+".png";
 
 }
