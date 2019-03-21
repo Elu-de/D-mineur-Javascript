@@ -24,7 +24,7 @@ class Board{
 			for(var j=0; j<y; j++){
 				var td = document.createElement("td");
 				var img = document.createElement("img");
-				img.src = "images/empty.png";
+				img.src = "images/normal.png";
 				td.appendChild(img);
 				tr.appendChild(td);
 				this.table[i].push(new Case(td));
