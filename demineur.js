@@ -32,6 +32,10 @@ class Board{
                 td.appendChild(img);
                 tr.appendChild(td);
                 this.table[i].push(new Case(td));
+
+                td.addEventListener("click", function(){
+                	selectionCase(this);
+                })
 			}
 		}
 	}
@@ -107,6 +111,10 @@ function start () {
 	}, 50);
 }
 
+function selectionCase(elm){
+	selectionPosition(elm.dataset.row, elm.dataset.column);
+}
 
-
-
+function selectionPosition(x, y){
+	console.log(x + "," + y);
+}
