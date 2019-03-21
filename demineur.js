@@ -8,6 +8,8 @@ var difficultes = {
 var niveauChoisi = "master";
 var table;
 
+document.getElementById("newgame").setAttribute("disabled","disabled");
+
 class Board{
 	constructor(x,y, nbrMines){
 		this.nbrMines = nbrMines;
@@ -42,22 +44,37 @@ class Case{
 }
 
 $("#newgame").on("click", function(){
-	var level = $("#level").children("option:selected").val();
+	var e = document.getElementById("level");
+	var level = e.options[e.selectedIndex].value;
+
+
 	var sizeX = difficultes[level][0];
 	var sizeY = difficultes[level][1];
 	var nbrMines = difficultes[level][2];
 	table = new Board(sizeX, sizeY, nbrMines);
 
+	randomMines(nbrMines);
 	start();
 })
 
-function randomMines(number){
-	rX = Math.floor(Math.random()*table.table[0].length);
-	rY = Math.floor(Math.random()*table.table.length);
+document.getElementById("level").addEventListener("change", function(){
+	var e = document.getElementById("level");
+	var level = e.options[e.selectedIndex].value;
 
+	if(level == ""){
+		document.getElementById("newgame").setAttribute("disabled","disabled");
+	}
+	else{
+		document.getElementById("newgame").removeAttribute("disabled");
+	}
+});
+
+function randomMines(number){
 	for(i=0; i<number; i++){
+		rX = Math.floor(Math.random()*table.table[0].length);
+		rY = Math.floor(Math.random()*table.table.length);
 		if(!table.table[rY][rX].mine){
-			table.table[rY][rX].mine = true
+			table.table[rY][rX].mine = true;
 		}
 		else{
 			i--;
@@ -81,7 +98,6 @@ function time(current_timer) {
 
 
 function start () {
-	
 	date = Date.now();
 	temp = setInterval(function () {
 		current_timer = Date.now() - date;
