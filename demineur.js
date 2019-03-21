@@ -48,7 +48,7 @@ $("#newgame").on("click", function(){
 	var nbrMines = difficultes[level][2];
 	table = new Board(sizeX, sizeY, nbrMines);
 
-	table.table[1][1].element.childNodes[0].src = "";
+	start();
 })
 
 function randomMines(number){
@@ -72,11 +72,11 @@ var current_timer;
 
 function time(current_timer) {
 	var ms = document.getElementById("ms");
-	ms.textContent = current_timer%1000
+	ms.textContent = (current_timer%1000).toString().padStart(3, "0");
 	var sec = document.getElementById("sec");
-	sec.textContent = (Math.floor(current_timer/1000))%60
+	sec.textContent = ((Math.floor(current_timer/1000))%60).toString().padStart(2, "0");
 	var min = document.getElementById("min");
-	min.textContent = (Math.floor(current_timer/60000))%60
+	min.textContent = ((Math.floor(current_timer/60000))%60).toString().padStart(2, "0");
 }
 
 
