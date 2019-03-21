@@ -48,12 +48,21 @@ class Board{
 			return this.table[row][column].mine;
 		}
 	}
+
+	isSelected(row, column){
+		if(row < 0 || row >= this.table[0].length || column < 0 || column >= this.table.length){
+			return true;
+		}
+		else{
+			return this.table[row][column].selected;
+		}
+	}
 }
 
 class Case{
 	constructor(elm){
 		this.mine = false;
-		this.discovered = false;
+		this.selected = false;
 		this.element = elm;
 	}
 }
@@ -127,6 +136,14 @@ function selectionCase(elm){
 }
 
 function selectionPosition(row, column){
+	if(row < 0 || row >= table.table[0].length || column < 0 || column >= table.table.length){
+		return;
+	}
+
+	if(table.isSelected(row,column)){
+		return;
+	}
+
 	if(!table.table[row][column].discovered){
 		if(table.isMined(row, column)){
 			alert("game over");
