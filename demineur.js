@@ -64,3 +64,31 @@ function randomMines(number){
 		}
 	}
 }
+
+
+var temp;
+var date;
+var current_timer;
+
+function time(current_timer) {
+	var ms = document.getElementById("ms");
+	ms.textContent = current_timer%1000
+	var sec = document.getElementById("sec");
+	sec.textContent = (Math.floor(current_timer/1000))%60
+	var min = document.getElementById("min");
+	min.textContent = (Math.floor(current_timer/60000))%60
+}
+
+
+function start () {
+	
+	date = Date.now();
+	temp = setInterval(function () {
+		current_timer = Date.now() - date;
+		time(current_timer);
+	}, 50);
+}
+
+
+
+

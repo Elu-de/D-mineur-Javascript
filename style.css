@@ -28,3 +28,9 @@ h1 {
 	align-items: center;
 	justify-content: center;
 }
+
+.chrono {
+	font-family: 'American Typewriter', serif;
+	font-size: 25px;
+	color: black;
+}

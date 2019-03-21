@@ -9,7 +9,7 @@
 	<h1>Démineur</h1>
 
 	<div id="menu">
-		<button id="newgame">Nouvelle Partie</button>
+		<button onclick="start()" id="newgame">Nouvelle Partie</button>
 
 		<select id="level">
 			<option value=""> Choississez un niveau de difficulté</option>
@@ -19,6 +19,12 @@
 			<option value="master"> Maître : 30x30 cases, 250 bombes </option>
 		</select>
 
+
+		<div class="chrono">
+			<span id="min">00</span> :
+			<span id="sec">00</span> .
+			<span id="ms">00</span>
+		</div>
 
 	</div>
 
