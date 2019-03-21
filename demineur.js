@@ -155,7 +155,7 @@ function selectionPosition(row, column){
 		return;
 	}
 
-	if(table.isFlaged(row, column)){
+	else if(table.isFlaged(row, column)){
 		table.nbrMines++;
 		document.getElementById("nbflag").textContent = table.nbrMines;
 	}
@@ -173,17 +173,25 @@ function selectionPosition(row, column){
 		}
 
 		else{
+			table.table[row][column].select = true;	
 			table.selectable--;
 			var nbrMines = checkAround(row, column);
 
 			if(!nbrMines){
 				document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/empty.png";
+				selectionPosition(row-1,column-1);
+				selectionPosition(row+1,column-1);
+				selectionPosition(row-1,column+1);
+				selectionPosition(row+1,column+1);
+				selectionPosition(row-1,column);
+				selectionPosition(row+1,column);
+				selectionPosition(row,column-1);
+				selectionPosition(row,column+1);
 			}
 			else{
 				document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/"+nbrMines+".png";
 			}
 
-			table.table[row][column].select = true;	
 		}
 
 		if(!table.selectable){
