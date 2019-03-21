@@ -39,6 +39,15 @@ class Board{
 			}
 		}
 	}
+
+	isMined(row, column){
+		if(row < 0 || row >= this.table[0].length || column < 0 || column >= this.table.length){
+			return false;
+		}
+		else{
+			return this.table[row][column].mine;
+		}
+	}
 }
 
 class Case{
@@ -112,9 +121,45 @@ function start () {
 }
 
 function selectionCase(elm){
-	selectionPosition(elm.dataset.row, elm.dataset.column);
+	row = parseInt(elm.dataset.row)
+	column = parseInt(elm.dataset.column)
+	selectionPosition(row, column);
 }
 
-function selectionPosition(x, y){
-	console.log(x + "," + y);
+function selectionPosition(row, column){
+	if(!table.table[row][column].discovered){
+		if(table.isMined(row, column)){
+			alert("game over");
+			clearInterval(temp);
+			document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/bomb.png";
+		}
+
+		else{
+			var nbrMines = checkAround(row, column);
+
+			if(!nbrMines){
+				document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/empty.png";
+			}
+			else{
+				document.querySelector("td[data-row='"+row+"'][data-column='"+column+"']").childNodes[0].src = "images/"+nbrMines+".png";
+			}
+
+			table.table[row][column].discovered = true;	
+		}
+	}
+}
+
+function checkAround(row, col){
+	var nbrMines = 0;
+
+	if(table.isMined(row-1,col-1)) nbrMines++;
+	if(table.isMined(row+1,col-1)) nbrMines++;
+	if(table.isMined(row-1,col+1)) nbrMines++;
+	if(table.isMined(row+1,col+1)) nbrMines++;
+	if(table.isMined(row-1,col)) nbrMines++;
+	if(table.isMined(row+1,col)) nbrMines++;
+	if(table.isMined(row,col+1)) nbrMines++;
+	if(table.isMined(row,col-1)) nbrMines++;
+
+	return nbrMines;
 }
