@@ -5,7 +5,7 @@ var difficultes = {
 	"expert" : [22, 22, 100],
 	"master" : [30, 30, 250]
 }
-var niveauChoisi = "master";
+var niveauChoisi;
 var table;
 var canPlay=false;
 
@@ -33,7 +33,7 @@ class Board{
                 img.src = "images/normal.png";
                 td.appendChild(img);
                 tr.appendChild(td);
-                this.table[i].push(new Case(td));
+                this.table[i].push(new Case());
 
                 td.addEventListener("click", function(){
                 	if(canPlay){
@@ -75,7 +75,7 @@ class Board{
 }
 
 class Case{
-	constructor(elm){
+	constructor(){
 		this.mine = false;
 		this.select = false;
 		this.flag = false;
