@@ -20,16 +20,18 @@ class Board{
 		document.getElementById("gameboard").appendChild(table);
 
 		for(var i=0; i<x; i++){
-			var tr = document.createElement("tr");
-			document.querySelector("table").appendChild(tr);
-			this.table.push([]);
-			for(var j=0; j<y; j++){
-				var td = document.createElement("td");
-				var img = document.createElement("img");
-				img.src = "images/normal.png";
-				td.appendChild(img);
-				tr.appendChild(td);
-				this.table[i].push(new Case(td));
+            var tr = document.createElement("tr");
+            document.querySelector("table").appendChild(tr);
+            this.table.push([]);
+            for(var j=0; j<y; j++){
+                var td = document.createElement("td");
+                td.dataset.row=""+i;
+                td.dataset.column=""+j;
+                var img = document.createElement("img");
+                img.src = "images/normal.png";
+                td.appendChild(img);
+                tr.appendChild(td);
+                this.table[i].push(new Case(td));
 			}
 		}
 	}
