@@ -151,6 +151,10 @@ function time(current_timer) {
 
 //Enclenche le départ d'un nouveau chrono
 function start () {
+	if(temp != undefined){
+		clearInterval(temp);
+		temp = undefined;
+	}
 	date = Date.now();
 	temp = setInterval(function () {
 		current_timer = Date.now() - date;
@@ -185,6 +189,7 @@ function selectionPosition(row, column){
 			canPlay=false;
 			alert("game over");
 			clearInterval(temp);
+			temp = undefined;
 			showMines();
 		}
 
@@ -214,6 +219,7 @@ function selectionPosition(row, column){
 			alert("You win !");
 			canPlay = false;
 			clearInterval(temp);
+			temp = undefined;
 		}
 	}
 }
